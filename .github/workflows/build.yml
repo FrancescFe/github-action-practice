@@ -39,6 +39,9 @@ jobs:
           name: executable-linux
           path: dist
 
+      - name: Make executable
+        run: chmod -x dist/comprova_desplegaments
+
       - name: Test executable
         run: ./dist/comprova_desplegaments https://francescfe.github.io/github-flow-practice/
 
