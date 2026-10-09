@@ -22,6 +22,29 @@ jobs:
       - name: Build executable
         run: pyinstaller --onefile comprova_desplegaments.py
 
+      - name: Upload Linux executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: executable-linux
+          path: dist/comprova_desplegaments
+
+  check-linux:
+    needs: build-linux
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Linux executable
+        uses: actions/download-artifact@v4
+        with:
+          name: executable-linux
+          path: dist
+
+      - name: Make executable
+        run: chmod +x dist/comprova_desplegaments
+
+      - name: Test executable
+        run: ./dist/comprova_desplegaments https://francescfe.github.io/github-flow-practice/
+
   build-macos:
     runs-on: macos-latest
 
