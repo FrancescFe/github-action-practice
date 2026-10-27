@@ -1,0 +1,32 @@
+name: Run JS linter and tests
+
+on:
+  push:
+    branches:
+      - nodejs_jest_job
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Run linter
+        run: |
+          npm ci
+          npm run lint
+
+  test-execution:
+    needs: linter
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Run jest tests
+        run: |
+          npm install jest
+          npm test
